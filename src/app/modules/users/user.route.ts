@@ -5,12 +5,10 @@ import { studentValidations } from "../student/student.validation";
 
 const router = express.Router();
 
-
-
 router.post(
   "/create-student",
   validationMiddleware(studentValidations.createStudentValidationSchema),
-  userController.createStudent
+  userController.createStudent,
 );
 
 export const userRoute = router;
