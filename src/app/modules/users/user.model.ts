@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 import { TUser } from "./user.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
-import { number } from "joi";
 
 const userSchema = new Schema<TUser>(
   {
@@ -34,19 +33,15 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(
     this.password,
-    Number(config.bcrypt_sult_rounds)
+    Number(config.bcrypt_sult_rounds),
   );
   next();
-});
-
-userSchema.post("save", function () {
-  console.log(this, "After saving the data");
 });
 
 export const UserModel = model<TUser>("User", userSchema);

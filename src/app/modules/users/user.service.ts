@@ -11,16 +11,14 @@ const createStudentIntoDB = async (password: string, studentData: Student) => {
   userData.role = "student";
   userData.id = "2030100001";
 
-  const createUserResult = await UserModel.create(userData)
-  if(Object.keys(createUserResult).length){
+  const createUserResult = await UserModel.create(userData);
+  if (Object.keys(createUserResult).length) {
     studentData.id = createUserResult.id;
-    studentData.user= createUserResult._id;
+    studentData.user = createUserResult._id;
 
-    const newStudent = await StudentModel.create(studentData)
+    const newStudent = await StudentModel.create(studentData);
     return newStudent;
   }
-
-  
 };
 
 export const userService = {

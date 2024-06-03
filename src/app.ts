@@ -15,8 +15,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
-
-
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const message = err.message || "Something went wrong";
   return res.status(500).json({
@@ -28,8 +26,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.all("*", (req: Request, res: Response) => {
   res.status(400).json({
-    success:false,
-    message:"API Not Found"
+    success: false,
+    message: "API Not Found",
   });
 });
 

@@ -17,5 +17,4 @@ const allRoutes = [
 
 allRoutes.forEach((router) => mainRouter.use(router.path, router.route));
 
-
-export default mainRouter
+export default mainRouter;

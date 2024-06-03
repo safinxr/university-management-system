@@ -9,7 +9,7 @@ import {
 
 // creating Schema
 const userNameSchema = new Schema<UserName>({
-  firstName: { type: String, required:true},
+  firstName: { type: String, required: true },
   middleName: { type: String },
   lastName: {
     type: String,
@@ -68,7 +68,7 @@ const studentSchema = new Schema<Student>({
     type: Schema.Types.ObjectId,
     required: [true, "User ID is required"],
     unique: true,
-    ref:"userModel",
+    ref: "userModel",
   },
   name: {
     type: userNameSchema,
