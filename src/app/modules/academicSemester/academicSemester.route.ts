@@ -17,7 +17,7 @@ router.get("/:id", AcademicSemesterControllers.getSingleAcademicSemester);
 router.patch(
   "/:id",
   validationMiddleware(
-    academicSemesterValidation.createAcademicSemesterValidationSchema,
+    academicSemesterValidation.updateAcademicSemesterValidationSchema,
   ),
   AcademicSemesterControllers.updateSingleAcademicSemester,
 );
