@@ -5,7 +5,7 @@ import { AcademicFacultyValidation } from "./academicFaculty.validation";
 
 const facultyRouter = Router();
 
-facultyRouter.use(
+facultyRouter.post(
   "/create-faculty",
   validationMiddleware(
     AcademicFacultyValidation.createAcademicFacultyValidationSchema,
@@ -13,9 +13,9 @@ facultyRouter.use(
   facultyController.createFaculty,
 );
 
-facultyRouter.use("/", facultyController.getFaculty);
-facultyRouter.use("/:id", facultyController.getSingleFaculty);
-facultyRouter.use(
+facultyRouter.get("/", facultyController.getFaculty);
+facultyRouter.get("/:id", facultyController.getSingleFaculty);
+facultyRouter.patch(
   "/:id",
   validationMiddleware(
     AcademicFacultyValidation.updateAcademicFacultyValidationSchema,
