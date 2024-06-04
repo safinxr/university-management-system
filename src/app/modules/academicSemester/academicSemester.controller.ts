@@ -20,6 +20,7 @@ const getAcademicSemester = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const getSingleAcademicSemester = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await academicSemesterServices.getSingleAcademicSemester(id);
