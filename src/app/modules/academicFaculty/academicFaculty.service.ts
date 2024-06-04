@@ -1,23 +1,23 @@
 import { TFaculty } from "./academicFaculty.interface";
-import { facultyModel } from "./academicFaculty.model";
+import { Faculty } from "./academicFaculty.model";
 
 const createFacultyIntoDB = async (payload: TFaculty) => {
-  const result = await facultyModel.create(payload);
+  const result = await Faculty.create(payload);
   return result;
 };
 
 const getFaculty = async () => {
-  const result = await facultyModel.find();
+  const result = await Faculty.find();
   return result;
 };
 
 const getSingleFaculty = async (id: string) => {
-  const result = await facultyModel.findById(id);
+  const result = await Faculty.findById(id);
   return result;
 };
 
 const updateFaculty = async (id: string, payload: Partial<TFaculty>) => {
-  const result = await facultyModel.findOneAndUpdate({ _id: id }, payload, {
+  const result = await Faculty.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
   return result;

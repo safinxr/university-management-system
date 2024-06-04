@@ -9,7 +9,7 @@ export const validationMiddleware = (schema: AnyZodObject) => {
       });
       next();
     } catch (err) {
-      next(err);
+       next(err)
     }
   };
 };

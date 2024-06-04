@@ -10,7 +10,7 @@ const DepartmentSchema = new Schema<TDepartment>(
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicFacultyModel",
+      ref: "Faculty",
     },
   },
   {
@@ -18,33 +18,27 @@ const DepartmentSchema = new Schema<TDepartment>(
   }
 );
 
-// academicDepartmentSchema.pre("save", async function (next) {
-//   const isDepartmentExist = await AcademicDepartment.findOne({
-//     name: this.name,
-//   });
+DepartmentSchema.pre("save", async function (next) {
+  const isDepartmentExist = await Department.findOne({
+    name: this.name,
+  });
 
-//   if (isDepartmentExist) {
-//     throw new AppError(
-//       httpStatus.NOT_FOUND,
-//       "This department is already exist!"
-//     );
-//   }
+  if (isDepartmentExist) {
+    throw new Error("This department is already exist!");
+  }
 
-//   next();
-// });
+  next();
+});
 
-// academicDepartmentSchema.pre("findOneAndUpdate", async function (next) {
-//   const query = this.getQuery();
-//   const isDepartmentExist = await AcademicDepartment.findOne(query);
+DepartmentSchema.pre("findOneAndUpdate", async function (next) {
+  const query = this.getQuery();
+  const isDepartmentExist = await Department.findOne(query);
 
-//   if (!isDepartmentExist) {
-//     throw new AppError(
-//       httpStatus.NOT_FOUND,
-//       "This department does not exist! "
-//     );
-//   }
+  if (!isDepartmentExist) {
+    throw new Error("This department does not exist! ");
+  }
 
-//   next();
-// });
+  next();
+});
 
-export const DepartmentModel = model<TDepartment>("Department", DepartmentSchema);
+export const Department = model<TDepartment>("Department", DepartmentSchema);

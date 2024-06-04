@@ -7,12 +7,26 @@ const createStudentIntoDB = async (student: Student) => {
 };
 
 const getAllStudentFromBD = async () => {
-  const result = await StudentModel.find();
+  const result = await StudentModel.find()
+    .populate("admissionSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
   return result;
 };
 
 const getSingleStudentFromBD = async (id: string) => {
-  const result = await StudentModel.findOne({ id: id });
+  const result = await StudentModel.findOne({ id: id })
+    .populate("admissionSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });;
   return result;
 };
 

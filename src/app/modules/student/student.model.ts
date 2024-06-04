@@ -68,7 +68,7 @@ const studentSchema = new Schema<Student>({
     type: Schema.Types.ObjectId,
     required: [true, "User ID is required"],
     unique: true,
-    ref: "userModel",
+    ref: "User",
   },
   name: {
     type: userNameSchema,
@@ -84,10 +84,6 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: [true, "Email is required"],
     unique: true,
-    validate: {
-      validator: (value: string) => validator.isEmail(value),
-      message: "not an email",
-    },
   },
   contactNo: {
     type: String,
@@ -121,13 +117,17 @@ const studentSchema = new Schema<Student>({
   },
   admissionSemester: {
     type: Schema.Types.ObjectId,
-    ref: "AcademicSemesterModel",
+    ref: "AcademicSemester",
   },
 
   profileImage: { type: String },
   isDeleted: {
     type: Boolean,
     default: false,
+  },
+  academicDepartment: {
+    type: Schema.Types.ObjectId,
+    ref: "Department",
   },
 });
 
