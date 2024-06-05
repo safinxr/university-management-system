@@ -1,12 +1,9 @@
 import { RequestHandler } from "express";
 import { studentServices } from "./student.service";
-import { z } from "zod";
-import studentValidationSchema from "./student.validation";
 import { catchAsync } from "../../utils/catchAsync";
 
 const createStudent: RequestHandler = catchAsync(async (req, res) => {
   const { student: studentData } = req.body;
-  // const zodValidation = studentValidationSchema.parse(studentData)
   const result = await studentServices.createStudentIntoDB(studentData);
   res.status(200).json({
     success: true,
@@ -34,8 +31,19 @@ const getSingleStudent: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const deleteStudent: RequestHandler = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await studentServices.deleteStudent(id);
+  res.status(200).json({
+    success: true,
+    message: "Student deleted",
+    data: result,
+  });
+});
+
 export const studentController = {
   createStudent,
   getAllStudent,
   getSingleStudent,
+  deleteStudent,
 };

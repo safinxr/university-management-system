@@ -3,7 +3,7 @@ import validator from "validator";
 import {
   Guardian,
   LocalGuardian,
-  Student,
+  TStudent,
   UserName,
 } from "./student.interface";
 
@@ -58,7 +58,7 @@ const localGuardianSchema = new Schema<LocalGuardian>({
   },
 });
 
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<TStudent>({
   id: {
     type: String,
     required: [true, "Student ID is required"],
@@ -133,4 +133,4 @@ const studentSchema = new Schema<Student>({
 
 // creating module
 
-export const StudentModel = model<Student>("Student", studentSchema);
+export const Student = model<TStudent>("Student", studentSchema);

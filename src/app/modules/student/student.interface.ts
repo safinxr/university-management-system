@@ -21,7 +21,7 @@ export type LocalGuardian = {
   contactNo: string;
   address: string;
 };
-export type Student = {
+export type TStudent = {
   id: string;
   user: Types.ObjectId;
   name: UserName;
@@ -42,5 +42,5 @@ export type Student = {
 };
 
 export type studentMethod = {
-  isUserExist(id: string): Promise<Student>;
+  isUserExist(id: string): Promise<TStudent>;
 };

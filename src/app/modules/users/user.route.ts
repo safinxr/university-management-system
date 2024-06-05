@@ -5,13 +5,10 @@ import { studentValidations } from "../student/student.validation";
 
 const router = express.Router();
 
-const alu = () =>{
-  console.log("going");
-}
 
 router.post(
   "/create-student",
-  validationMiddleware(studentValidations.createStudentValidationSchema),alu,
+  validationMiddleware(studentValidations.createStudentValidationSchema),
   userController.createStudent,
 );
 
