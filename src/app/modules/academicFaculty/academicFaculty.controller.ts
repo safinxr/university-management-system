@@ -1,48 +1,63 @@
-import { catchAsync } from "../../utils/catchAsync";
-import { facultyServices } from "./academicFaculty.service";
+import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { AcademicFacultyServices } from './academicFaculty.service';
 
-const createFaculty = catchAsync(async (req, res) => {
-  const result = await facultyServices.createFacultyIntoDB(req.body);
-  res.status(200).json({
+const createAcademicFaculty = catchAsync(async (req, res) => {
+  const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
     success: true,
-    message: " Academic Faculty Created",
+    message: 'Academic faculty is created succesfully',
     data: result,
   });
 });
 
-const getFaculty = catchAsync(async (req, res) => {
-  const result = await facultyServices.getFaculty();
-  res.status(200).json({
+const getAllAcademicFaculties = catchAsync(async (req, res) => {
+  const result = await AcademicFacultyServices.getAllAcademicFacultiesFromDB();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
     success: true,
-    message: "Get all Academic Faculty",
+    message: 'Academic faculties are retrieved successfully',
     data: result,
   });
 });
 
-const getSingleFaculty = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await facultyServices.getSingleFaculty(id);
-  res.status(200).json({
+const getSingleAcademicFaculty = catchAsync(async (req, res) => {
+  const { facultyId } = req.params;
+  const result =
+    await AcademicFacultyServices.getSingleAcademicFacultyFromDB(facultyId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
     success: true,
-    message: "Faculty find by id",
+    message: 'Academic faculty is retrieved succesfully',
     data: result,
   });
 });
 
-const updateFaculty = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const payload = req.body;
-  const result = await facultyServices.updateFaculty(id, payload);
-  res.status(200).json({
+const updateAcademicFaculty = catchAsync(async (req, res) => {
+  const { facultyId } = req.params;
+  const result = await AcademicFacultyServices.updateAcademicFacultyIntoDB(
+    facultyId,
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
     success: true,
-    message: " Faculty Updated",
+    message: 'Academic faculty is updated succesfully',
     data: result,
   });
 });
 
-export const facultyController = {
-  createFaculty,
-  getFaculty,
-  getSingleFaculty,
-  updateFaculty,
+export const AcademicFacultyControllers = {
+  createAcademicFaculty,
+  getAllAcademicFaculties,
+  getSingleAcademicFaculty,
+  updateAcademicFaculty,
 };

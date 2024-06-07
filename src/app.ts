@@ -1,34 +1,32 @@
-import express, { Application, Request, Response, NextFunction } from "express";
-import cors from "cors";
-import mainRouter from "./app/router";
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import cors from 'cors';
+import express, { Application, Request, Response } from 'express';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
+
 const app: Application = express();
 
-// parsers
+//parsers
 app.use(express.json());
 app.use(cors());
 
-// application router
+// application routes
+app.use('/api/v1', router);
 
-app.use("/api/v1", mainRouter);
+const test = (req: Request, res: Response) => {
+  const a = 10;
+  res.send(a);
+};
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
-});
+app.get('/', test);
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  const message = err.message || "Something went wrong";
-  return res.status(500).json({
-    success: false,
-    message,
-    error: err,
-  });
-});
+app.use(globalErrorHandler);
 
-app.all("*", (req: Request, res: Response) => {
-  res.status(400).json({
-    success: false,
-    message: "API Not Found",
-  });
-});
+//Not Found
+app.use(notFound);
 
 export default app;

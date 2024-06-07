@@ -1,7 +1,9 @@
-import { Schema, model } from "mongoose";
-import { TDepartment } from "./academicDepartment.interface";
+import httpStatus from 'http-status';
+import { Schema, model } from 'mongoose';
+import AppError from '../../errors/AppError';
+import { TAcademicDepartment } from './academicDepartment.interface';
 
-const DepartmentSchema = new Schema<TDepartment>(
+const academicDepartmentSchema = new Schema<TAcademicDepartment>(
   {
     name: {
       type: String,
@@ -10,35 +12,44 @@ const DepartmentSchema = new Schema<TDepartment>(
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
-      ref: "Faculty",
+      ref: 'AcademicFaculty',
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-DepartmentSchema.pre("save", async function (next) {
-  const isDepartmentExist = await Department.findOne({
+academicDepartmentSchema.pre('save', async function (next) {
+  const isDepartmentExist = await AcademicDepartment.findOne({
     name: this.name,
   });
 
   if (isDepartmentExist) {
-    throw new Error("This department is already exist!");
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This department is already exist!',
+    );
   }
 
   next();
 });
 
-DepartmentSchema.pre("findOneAndUpdate", async function (next) {
+academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
-  const isDepartmentExist = await Department.findOne(query);
+  const isDepartmentExist = await AcademicDepartment.findOne(query);
 
   if (!isDepartmentExist) {
-    throw new Error("This department does not exist! ");
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This department does not exist! ',
+    );
   }
 
   next();
 });
 
-export const Department = model<TDepartment>("Department", DepartmentSchema);
+export const AcademicDepartment = model<TAcademicDepartment>(
+  'AcademicDepartment',
+  academicDepartmentSchema,
+);
